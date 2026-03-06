@@ -13,7 +13,7 @@ jobs:
   build:
     runs-on: ubuntu-24.04
     env:
-      HYPERHDR_DEB: 'https://github.com/awawa-dev/HyperHDR/releases/download/v${{ github.event.inputs.tags }}/HyperHDR-${{ github.event.inputs.tags }}-Linux-${{ github.event.inputs.architecture }}.deb'
+      HYPERHDR_DEB: 'https://github.com/anshsharma240/HyperHDR/releases/download/v${{ github.event.inputs.tags }}/HyperHDR-${{ github.event.inputs.tags }}-Linux-${{ github.event.inputs.architecture }}.deb'
       
     steps:
     - name: Install Dependencies
@@ -59,7 +59,7 @@ jobs:
         echo 'export MODULES="base(network,hyperhdr)"' >> config
         echo 'export RPI_IMAGER_NAME="${DIST_NAME} version ${DIST_VERSION}"' >> config
         echo 'export RPI_IMAGER_DESCRIPTION="A Raspberry Pi distribution for ambient lighting. Ships HyperHDR out-of-the-box."' >> config
-        echo 'export RPI_IMAGER_ICON="https://github.com/awawa-dev/HyperHDR/blob/master/resources/icons/hyperhdr-icon-32px.png"' >> config
+        echo 'export RPI_IMAGER_ICON="https://github.com/anshsharma240/HyperHDR/blob/master/resources/icons/hyperhdr-icon-32px.png"' >> config
         echo 'export BASE_IMAGE_ENLARGEROOT=2000' >> config
         echo 'export BASE_IMAGE_RESIZEROOT=200' >> config      
         cd modules/hyperhdr
@@ -68,9 +68,9 @@ jobs:
         echo 'set -e' >> start_chroot_script
         echo 'source /common.sh' >> start_chroot_script        
         echo 'type -p curl >/dev/null || apt install curl -y' >> start_chroot_script
-        echo 'curl -fsSL https://awawa-dev.github.io/hyperhdr.public.apt.gpg.key | dd of=/usr/share/keyrings/hyperhdr.public.apt.gpg.key \' >> start_chroot_script
+        echo 'curl -fsSL https://anshsharma.github.io/hyperhdr.public.apt.gpg.key | dd of=/usr/share/keyrings/hyperhdr.public.apt.gpg.key \' >> start_chroot_script
         echo '&& chmod go+r /usr/share/keyrings/hyperhdr.public.apt.gpg.key \' >> start_chroot_script
-        echo '&& echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/hyperhdr.public.apt.gpg.key] https://awawa-dev.github.io $(lsb_release -cs) main" | tee /etc/apt/sources.list.d/hyperhdr.list > /dev/null \' >> start_chroot_script
+        echo '&& echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/hyperhdr.public.apt.gpg.key] https://anshsharma240.github.io $(lsb_release -cs) main" | tee /etc/apt/sources.list.d/hyperhdr.list > /dev/null \' >> start_chroot_script
         echo '&& apt update \' >> start_chroot_script
         echo '&& apt install --only-upgrade udev -y \' >> start_chroot_script        
         echo '&& apt install hyperhdr -y' >> start_chroot_script        
