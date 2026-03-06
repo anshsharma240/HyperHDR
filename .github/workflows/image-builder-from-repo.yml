@@ -35,6 +35,8 @@ jobs:
             rsync \
             wget \
             curl
+            
+        pip3 install GitPython    
 
       - name: Checkout CustomPiOS
         uses: actions/checkout@v4
