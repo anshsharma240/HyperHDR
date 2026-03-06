@@ -1,4 +1,4 @@
-name: HyperHDR Package Build (Github Pages Repo)
+name: Pixylights Package Build (Github Pages Repo)
 
 on:
   push:
@@ -12,7 +12,7 @@ env:
 
 jobs:
 ######################################
-###### Upload to HyperHDR repo #######
+###### Upload to Pixylights repo #######
 ######################################
   Linux:
     name: ${{ matrix.architecture }}/${{ matrix.distroName}}:${{ matrix.distroVersion }}
