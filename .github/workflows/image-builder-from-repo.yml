@@ -49,6 +49,13 @@ jobs:
           sudo bash -x src/make_custom_pi_os HyperHDR
           sudo chown -R runner:runner HyperHDR
 
+      - name: Fix arm64 Bullseye boot mount path
+        if: github.event.inputs.architecture == 'aarch64'
+        run: |
+          echo 'export BASE_BOOT_MOUNT_PATH=boot' >> CustomPiOS/src/variants/raspios_lite_arm64/config
+          echo 'Patched variant config:'
+          cat CustomPiOS/src/variants/raspios_lite_arm64/config
+
       - name: Download Raspbian Image (32-bits)
         if: github.event.inputs.architecture != 'aarch64'
         run: |
@@ -80,11 +87,6 @@ jobs:
             echo 'export BASE_IMAGE_ENLARGEROOT=2000'
             echo 'export BASE_IMAGE_RESIZEROOT=200'
           } > config
-
-          # Bullseye arm64 image uses /boot, not /boot/firmware
-          if [ "${{ github.event.inputs.architecture }}" = "aarch64" ]; then
-            echo 'export BASE_BOOT_MOUNT_PATH=boot' >> config
-          fi
 
           cd modules/hyperhdr
           cat > start_chroot_script <<'EOF'
