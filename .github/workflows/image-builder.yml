@@ -21,8 +21,7 @@ jobs:
       HYPERHDR_DEB: 'https://github.com/awawa-dev/HyperHDR/releases/download/v${{ github.event.inputs.tags }}/HyperHDR-${{ github.event.inputs.tags }}-Linux-${{ github.event.inputs.architecture }}.deb'
       
     steps:
-
-    - name: Overrride Debian download link
+    - name: Override Debian download link
       if: github.event.inputs.debian != ''
       run: |
         tag_name="${{ github.event.inputs.tags }}"
@@ -35,16 +34,17 @@ jobs:
     - name: Install Dependencies
       run: |
         sudo apt update
-        # Added python3-pip and python3-venv to manage the GitPython installation
-        sudo apt install -y coreutils p7zip-full qemu-user-static python3-pip python3-venv
-        # Install the specific library CustomPiOS is looking for
+        sudo apt install -y coreutils p7zip-full qemu-user-static python3-pip lsb-release
+        # Fix for the ModuleNotFoundError: No module named 'git'
         python3 -m pip install --break-system-packages GitPython
 
     - name: Checkout CustomPiOS
-      uses: actions/checkout@v6.0.2
+      uses: actions/checkout@v4
       with:
         repository: 'guysoft/CustomPiOS'
         path: CustomPiOS
+
+  
 
     - name: Select CustomPiOS version
       if: github.event.inputs.tagCustomPiOS != ''
